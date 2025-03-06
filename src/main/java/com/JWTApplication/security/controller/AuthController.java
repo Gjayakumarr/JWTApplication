@@ -50,6 +50,7 @@ public class AuthController {
             response.put("departmentId", user.getDepartmentId());
             response.put("managerId", user.getManagerId());
 
+            System.out.println("---------Login Successful-------");
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
