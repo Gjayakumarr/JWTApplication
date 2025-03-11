@@ -15,5 +15,7 @@ public interface UserService {
 
     public UserResponse getUserDetails();
 
-    public UserResponse updatePassword(int userId, String oldPassword, String newPassword);
+    public UserResponse updatePassword(String username, String oldPassword, String newPassword);
+
+    String forgotPassword(String username);
 }

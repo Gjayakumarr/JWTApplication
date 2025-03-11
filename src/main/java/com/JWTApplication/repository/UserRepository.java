@@ -30,10 +30,10 @@ public interface UserRepository extends JpaRepository<UserDetailsV1, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE users u SET u.password = :passWord WHERE u.id = :userId")
-    int updatePassword(@Param("userId") int userId, @Param("passWord") String passWord);
+    @Query("UPDATE users u SET u.password = :passWord WHERE u.username = :username")
+    int updatePassword(@Param("username") String username, @Param("passWord") String passWord);
 
-    @Query(value = "SELECT password FROM users WHERE user_id = :userId", nativeQuery = true)
-    String getOldPassword(@Param("userId") int userId);
+    @Query(value = "SELECT password FROM users WHERE username = :username", nativeQuery = true)
+    String getOldPassword(@Param("username") String username);
 
 }
