@@ -11,6 +11,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RequestMapping("/admin")
 @RestController
 public class AdminOperationController {
@@ -37,6 +40,18 @@ public class AdminOperationController {
     public UserResponse updateUser(@RequestBody UserDetailsV1 userDetails) {
         logger.info("AdminOperationController /updateUser api call with : {}", userDetails.toString());
         return userService.updateUser(userDetails);
+    }
+
+    @GetMapping("/resetPassword/{username}")
+    public Map<String, String> resetPassword(@PathVariable String username) {
+        logger.info("Generating new password for user: " + username);
+
+        String newPassword = userService.forgotPassword(username);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("newPassword", newPassword);
+
+        return response;
     }
 
     @PostMapping("/deactivate/{userId}")

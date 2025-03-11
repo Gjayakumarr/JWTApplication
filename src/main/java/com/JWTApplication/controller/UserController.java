@@ -24,8 +24,8 @@ public class UserController {
     }
 
     @PostMapping("/updatePassword")
-    public UserResponse updatePassword(@RequestParam("userId") int userId, @RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
-        logger.info("UserController /updatePassword api call with : {}", userId);
-        return userService.updatePassword(userId, oldPassword, newPassword);
+    public UserResponse updatePassword(@RequestParam("username") String username, @RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
+        logger.info("UserController /updatePassword api call with : {}", username);
+        return userService.updatePassword(username, oldPassword, newPassword);
     }
 }

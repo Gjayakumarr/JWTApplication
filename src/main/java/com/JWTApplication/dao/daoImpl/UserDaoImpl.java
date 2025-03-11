@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class UserDaoImpl implements UserDao {
@@ -43,10 +44,26 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int updatePassword(int userId, String oldPassword, String newPassword) {
+    public int updatePassword(String username, String oldPassword, String newPassword) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        String matcher = repository.getOldPassword(userId);
-        return !passwordEncoder.matches(oldPassword, matcher) ? -1 : repository.updatePassword(userId, passwordEncoder.encode(newPassword));
+        String matcher = repository.getOldPassword(username);
+        return !passwordEncoder.matches(oldPassword, matcher) ? -1 : repository.updatePassword(username, passwordEncoder.encode(newPassword));
+    }
+
+    @Override
+    public String forgotPassword(String username) {
+        String temporaryPassword = generateTemporaryPassword();
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(temporaryPassword);
+
+        repository.updatePassword(username, encodedPassword);
+
+        return temporaryPassword;
+    }
+
+    private String generateTemporaryPassword() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }

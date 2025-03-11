@@ -94,8 +94,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updatePassword(int userId, String oldPassword, String newPassword) {
-        int result = userDao.updatePassword(userId, oldPassword, newPassword);
+    public UserResponse updatePassword(String username, String oldPassword, String newPassword) {
+        int result = userDao.updatePassword(username, oldPassword, newPassword);
         UserResponse response = new UserResponse();
         if (result == -1) {
             response.setStatusCode(Constant.RESPONSE_CODE.SUCCESS);
@@ -112,5 +112,11 @@ public class UserServiceImpl implements UserService {
         }
         logger.info("Response :: {}",response.toString());
         return response;
+    }
+
+    @Override
+    public String forgotPassword(String username) {
+        return userDao.forgotPassword(username);
+
     }
 }

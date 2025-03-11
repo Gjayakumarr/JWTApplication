@@ -18,5 +18,7 @@ public interface UserDao {
 
     public List<Map<String, Object>> getUserDetails();
 
-    public int updatePassword(int userId, String oldPassword, String newPassword);
+    public int updatePassword(String username, String oldPassword, String newPassword);
+
+    public String forgotPassword(String username);
 }
